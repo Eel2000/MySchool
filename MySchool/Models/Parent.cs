@@ -17,8 +17,8 @@ namespace MySchool.Models
 
         public string Phone { get; set; }
 
-
         public ICollection<Enfants> Enfants { get; set; }
+
         public ICollection<Derogation> Derogations { get; set; }
     }
 }
