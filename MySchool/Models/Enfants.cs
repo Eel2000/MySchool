@@ -20,7 +20,7 @@ namespace MySchool.Models
 
         [Required]
         [MinLength(5)]
-        [Display(Name ="Nom et Post-Nom")]
+        [Display(Name ="Noms")]
         public string LastName { get; set; }
 
         [Required]

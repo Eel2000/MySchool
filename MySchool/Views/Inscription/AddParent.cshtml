@@ -1,0 +1,51 @@
+﻿@model MySchool.Models.Parent
+@{
+    ViewData["Title"] = "Nouveau Parent";
+}
+
+<h1 class="text-center">Bienvenu cher parents</h1>
+
+<div class="jumbotron">
+    <p class="text-info">
+        pour inscrire votre enfant ou vos enfants dans cet etablissement , vous devez premierement
+        laisser vos coordonnees , vous enregistrer chez nous en tant que parent ou tuteur , cela nous permet
+        de rester en contact avec vous durant l'annee scolaire. car nous voulons que chaque enfant dans notre etablissement
+        ait un tuteur ou parent. afin des nous assurer qu'en cas de soucis nous puissions avoir des coordonnees des proches.
+    </p>
+</div>
+
+<div class="container col-6">
+    <form method="post">
+        <div asp-validation-summary="ModelOnly"></div>
+        <div class="form-group">
+            <label asp-for="FirstName" class="custom-control-label font-weight-bold"></label>
+            <input type="text" asp-for="FirstName" class="form-control" placeholder="Prenom du parent/Tuteur" />
+            <span asp-validation-for="FirstName"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="LastName" class="custom-control-label font-weight-bold"></label>
+            <input type="text" asp-for="LastName" class="form-control" placeholder="Nom Complet du parent / tuteur" />
+            <span asp-validation-for="LastName"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Email" class="custom-control-label font-weight-bold"></label>
+            <input type="text" asp-for="Email" class="form-control" placeholder="Adresse Email du parent/ Tuteur" />
+            <span asp-validation-for="Email"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Phone" class="custom-control-label font-weight-bold"></label>
+            <input type="text" asp-for="Phone" class="form-control" placeholder="Numero de telephone du parent / tuteur" />
+            <span asp-validation-for="Phone"></span>
+        </div>
+       
+        <div class="form-group justify-content-xl-center">
+            <input type="submit" value="Valider & inscrire" class="btn btn-primary" />
+            <a asp-controller="Home" asp-action="Index" class="nav-link text-danger">Annuler</a>
+        </div>
+    </form>
+</div>
+
+
+@section scripts{
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+}
