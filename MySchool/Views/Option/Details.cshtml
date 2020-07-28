@@ -1,0 +1,38 @@
+﻿@model IEnumerable<MySchool.Models.Option>
+@{
+    ViewData["Title"] = "Details Option";
+}
+
+@foreach (var item in Model)
+{
+    <h1>@Html.DisplayFor(opt => item.Designation)</h1>
+}
+
+<div class="container col-6">
+    <table class="table table-info">
+        @foreach (var Opt in Model)
+        {
+            if (Opt.Cours.Count() > 0)
+            {
+                foreach (var item in Opt.Cours)
+                {
+                    <tr>
+                        <td> @Html.DisplayFor(cours => item.DesignationCours)</td>
+                        <td> @Html.DisplayFor(cours => item.VolumeHoraire)</td>
+                        <td> @Html.DisplayFor(cours => item.Enseignant)</td>
+                        <td> @Html.DisplayFor(cours => item.Statu)</td>
+                        <td> @item.Traveaux.Count()</td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr>
+                    <td>
+                        <h4 class="text-info text-capitalize text-center">Aucun cours n'est disponible dans cette section pour le moment!</h4>
+                    </td>
+                </tr>
+            }
+        }
+    </table>
+</div>

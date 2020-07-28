@@ -10,7 +10,7 @@ namespace MySchool.Models
         public int OptionID { get; set; }
 
         [Required]
-        [Display(Name ="Option")]
+        [Display(Name ="Section")]
         public string Designation { get; set; }
 
         public IEnumerable<Cours> Cours { get; set; }

@@ -1,0 +1,28 @@
+﻿@model MySchool.Models.Option
+@{
+    ViewData["Title"] = "Nouvelle Option";
+}
+
+<h1 class="text-center">Nouvelle Section</h1>
+
+
+<div class="container col-6">
+    <form method="post">
+        <div asp-validation-summary="ModelOnly"></div>
+        <div class="form-group">
+            <label asp-for="Designation" class="custom-control-label font-weight-bold"></label>
+            <input type="text" asp-for="Designation" class="form-control" placeholder="Designation de la section" />
+            <span asp-validation-for="Designation" class="text-danger"></span>
+        </div>
+             
+        <div class="form-group justify-content-xl-center">
+            <input type="submit" value="Ajouter" class="btn btn-primary" />
+            <a asp-controller="Option" asp-action="Index" class="nav-link text-danger">Annuler</a>
+        </div>
+    </form>
+</div>
+
+
+@section scripts{
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+}

@@ -50,6 +50,16 @@ namespace MySchool.Controllers
             return View();
         }
 
+        [HttpGet]
+        public async Task<IActionResult> Parents()
+        {
+            var parentAvailable = await _dbContext.Parents.
+                Include(p => p.Enfants)
+                .ToListAsync();
+
+            return View(parentAvailable);
+        }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Index([Bind("FirstName,LastName,Email,Grade,OptionID,ParentID")] Enfants enfants)
