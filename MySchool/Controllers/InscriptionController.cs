@@ -108,5 +108,22 @@ namespace MySchool.Controllers
             return View();
         }
 
+        [HttpGet]
+        public IActionResult DetailsParents(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var parentLoaded = _dbContext.Parents
+                .Where(p => p.ParentID == id)
+                .Include(p => p.Enfants)
+                    .ThenInclude(e =>e.Option)
+                 .ToList();
+
+            return View(parentLoaded);
+        }
+
     }
 }

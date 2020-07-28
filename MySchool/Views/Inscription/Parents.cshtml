@@ -1,0 +1,57 @@
+﻿@model IEnumerable<MySchool.Models.Parent>
+@{
+    ViewData["Title"] = "Parents";
+}
+
+    <h1>List des parents</h1>
+
+    <div class="jumbotron">
+        <p>
+            Vous trouverez ici la liste des touts les parents qui ont confier(inscrit) leurs enfants dans notre etablissement
+            cette listes n'est pas exostive elle peut s'etendre encore. merci de verifier si vous y etes chers parents , sinon
+            nous vous prions de vous enregistrer afin d'avoir la possibilite d'inscrire vos enfants dans notre etablissement.
+        </p>
+    </div>
+
+    <div class="container">
+        <table class="table table-danger">
+            <tr>
+                <th>#</th>
+                <th>Prenom</th>
+                <th>Nom Complet</th>
+                <th>Email</th>
+                <th>Telephone</th>
+                <th>Enfants</th>
+                <th>----</th>
+            </tr>
+            @if (Model.Count() > 0)
+            {
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td></td>
+                        <td>@Html.DisplayFor(p => item.FirstName)</td>
+                        <td>@Html.DisplayFor(p => item.LastName)</td>
+                        <td>@Html.DisplayFor(p => item.Email)</td>
+                        <td>@Html.DisplayFor(p => item.Phone)</td>
+                        <td>@item.Enfants.Count()</td>
+                        <td>
+                            <a asp-action="DetailsParents" asp-controller="Inscription" asp-route-id="@item.ParentID" class="nav-link">Details</a>
+                        </td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr>
+                    <td>
+                        <h1 class="text-info text-center">Aucun parent pour l'instant</h1>
+                    </td>
+                </tr>
+            }
+        </table>
+    </div>
+
+    <div>
+        <a asp-action="AddParent">Nouvelle Inscription</a>
+    </div>

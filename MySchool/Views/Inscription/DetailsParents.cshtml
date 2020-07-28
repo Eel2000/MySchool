@@ -1,0 +1,80 @@
+﻿@model IEnumerable<MySchool.Models.Parent>
+@{
+    ViewData["Title"] = "Details du Parent";
+}
+
+<h1>Details sur le parent</h1>
+<hr />
+
+@foreach (var parents in Model)
+{
+    <div class="container col-12">
+
+        <div class="col-md-8">
+            <div class="form-group">
+                <label class="font-weight-bold">Prenom :</label>
+                <label>@Html.DisplayFor(p => parents.FirstName)</label>
+            </div>
+        </div>
+        <div class="col-md-8">
+            <div class="form-group">
+                <label class="font-weight-bold">Nom Complet :</label>
+                <label>@Html.DisplayFor(p => parents.LastName)</label>
+            </div>
+        </div>
+        <div class="col-md-8">
+            <div class="form-group">
+                <label class="font-weight-bold">Email :</label>
+                <label>@Html.DisplayFor(p => parents.Email)</label>
+            </div>
+        </div>
+        <div class="col-md-8">
+            <div class="form-group">
+                <label class="font-weight-bold">Telephone :</label>
+                <label>@Html.DisplayFor(p => parents.Phone)</label>
+            </div>
+        </div>
+        <div class="col-md-8">
+            <div class="form-group">
+                <label class="font-weight-bold">Enfants :</label>
+                <label>@parents.Enfants.Count()</label>
+            </div>
+        </div>
+    </div>
+}
+
+<div class="container">
+    <table class="table table-info">
+        <tr>
+            <th>Prenom</th>
+            <th>Nom Complet</th>
+            <th>Classe</th>
+            <th>Option</th>
+            <th>Email</th>
+        </tr>
+        @if (Model.Count() > 0)
+        {
+            foreach (var parent in Model)
+            {
+                foreach (var enfant in parent.Enfants)
+                {
+                    <tr>
+                        <td>@Html.DisplayFor(e => enfant.FirstName)</td>
+                        <td>@Html.DisplayFor(e => enfant.LastName)</td>
+                        <td>@Html.DisplayFor(e => enfant.Grade)</td>
+                        <td>@Html.DisplayFor(e => enfant.Option.Designation)</td>
+                        <td>@Html.DisplayFor(e => enfant.Email)</td>
+                    </tr>
+                }
+            }
+        }
+        else
+        {
+            <tr>
+                <td>
+                    <h1 class="text-info">Aucun des ses enfants n'est inscrit</h1>
+                </td>
+            </tr>
+        }
+    </table>
+</div>
