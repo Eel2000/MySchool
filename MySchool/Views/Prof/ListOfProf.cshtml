@@ -1,0 +1,57 @@
+﻿@model IEnumerable<MySchool.Models.Enseignant>
+@{
+}
+
+<h1>List des enseignants disponible</h1>
+
+<div class="container">
+    <table class="table table-warning">
+        <tr>
+            <th>#</th>
+            <th>Prenom</th>
+            <th>Nom Complet</th>
+            <th>Email</th>
+            <th>Telephone</th>
+            <th>Section</th>
+            <th>Cours dispenser</th>
+            <th>----</th>
+        </tr>
+        @if (Model.Count() > 0)
+        {
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td></td>
+                    <td>@Html.DisplayFor(p => item.FirstName)</td>
+                    <td>@Html.DisplayFor(p => item.LastName)</td>
+                    <td>@Html.DisplayFor(p => item.Email)</td>
+                    <td>@Html.DisplayFor(p => item.PhoneNumber)</td>
+                    <td>@Html.DisplayFor(p => item.Option.Designation)</td>
+                    @if (!Object.ReferenceEquals(item.Cours,null))
+                    {
+                        <td>@item.Cours.Count()</td>
+                    }
+                    else
+                    {
+                        <td>Pas de cours dispenser</td>
+                    }
+                    <td>
+                        <a asp-action="DetailsParents" asp-controller="Inscription" asp-route-id="@item.EnseignantID" class="nav-link">Details</a>
+                    </td>
+                </tr>
+            }
+        }
+        else
+        {
+            <tr>
+                <td>
+                    <h1 class="text-info text-center">Aucun parent pour l'instant</h1>
+                </td>
+            </tr>
+        }
+    </table>
+</div>
+
+<div>
+    <a asp-action="Index" asp-controller="Prof">Engager</a>
+</div>
