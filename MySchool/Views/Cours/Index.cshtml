@@ -1,7 +1,48 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model IEnumerable<MySchool.Models.Cours>
 @{
+    ViewData["Title"] = "Cours";
 }
 
-    <h1>Liste des cours disponible</h1>
+<h1>Liste des cours disponible</h1>
+
+<div class="container">
+    <table class="table table-primary">
+        <tr>
+            <th>#</th>
+            <th>Designation</th>
+            <th>Option</th>
+            <th>Enseignant</th>
+            <th>Volume Horaire</th>
+            <th>Statu</th>
+        </tr>
+        @if (Object.ReferenceEquals(Model.Count(), null))
+        {
+            <tr>
+                <td></td>
+                <td>Vide</td>
+                <td>vide</td>
+                <td>vide</td>
+                <td>vide</td>
+                <td>vide</td>
+            </tr>
+        }
+        else
+        {
+            foreach (var cours in Model)
+            {
+                <tr>
+                    <td></td>
+                    <td>@Html.DisplayFor(c => cours.DesignationCours)</td>                    
+                    <td>@Html.DisplayFor(c => cours.Option.Designation)</td>                    
+                    <td>@Html.DisplayFor(c => cours.Enseignant.Fullname)</td>                    
+                    <td>@Html.DisplayFor(c => cours.VolumeHoraire)</td>                    
+                    <td>@Html.DisplayFor(c => cours.Statu)</td>                    
+                </tr>
+            }
+        }
+    </table>
+</div>
+
+<div class="container">
+    <a asp-action="NewCours" asp-controller="Cours" class="nav-link">Ajouter un cours</a>
+</div>

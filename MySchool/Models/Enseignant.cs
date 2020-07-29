@@ -30,6 +30,7 @@ namespace MySchool.Models
 
         public int OptionID { get; set; }
 
+        public string Fullname => FirstName + " - " + LastName;
         /// <summary>
         /// Navigation Properties
         /// </summary>

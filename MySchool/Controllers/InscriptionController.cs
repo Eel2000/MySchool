@@ -23,15 +23,15 @@ namespace MySchool.Controllers
         }
 
         //creating method for populating Option from db      
-        public void PopulateOptionsDropDownList(object selectedOption = null)
-        {
-            var OptionsQuery = from c in _dbContext.Options
-                               orderby c.Designation //sort by designation
-                               select c;
+            public void PopulateOptionsDropDownList(object selectedOption = null)
+            {
+                var OptionsQuery = from c in _dbContext.Options
+                                   orderby c.Designation //sort by designation
+                                   select c;
 
-            ViewBag.CategoryNameSL = new SelectList(OptionsQuery.AsNoTracking(), "OptionID", "Designation", selectedOption);
+                ViewBag.CategoryNameSL = new SelectList(OptionsQuery.AsNoTracking(), "OptionID", "Designation", selectedOption);
 
-        }
+            }
         public void PopulateParentsDropDownList(object selectedOption = null)
         {
             var OptionsQuery = from c in _dbContext.Parents

@@ -22,7 +22,7 @@ namespace MySchool.Models
         public int EnseignantID { get; set; }
 
         [Required]
-        [MinLength(10),MaxLength(30)]
+        [MinLength(2),MaxLength(30)]
         [Display(Name ="Nom du cours")]
         public string DesignationCours { get; set; }
 

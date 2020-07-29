@@ -1,0 +1,54 @@
+﻿@model MySchool.Models.Cours
+@{
+    ViewData["Title"] = "Nouveau cours";
+}
+
+<h1 class="text-center">Ajouter un nouveau cours</h1>
+
+<div class="container col-6">
+    <form method="post">
+        <div asp-validation-summary="ModelOnly"></div>
+        <div class="form-group">
+            <label asp-for="DesignationCours" class="custom-control-label font-weight-bold"></label>
+            <input type="text" asp-for="DesignationCours" class="form-control" placeholder="designation ou titre du cours" />
+            <span asp-validation-for="DesignationCours" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="VolumeHoraire" class="custom-control-label font-weight-bold"></label>
+            <input type="text" asp-for="VolumeHoraire" class="form-control" placeholder="Volume horaire" />
+            <span asp-validation-for="VolumeHoraire" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Option" class="custom-control-label font-weight-bold"></label>
+            <select asp-for="OptionID" class="form-control" asp-items="ViewBag.OptionSL">
+                <option value="">---Choisissez L'option---</option>
+            </select>
+            <span asp-validation-for="Option"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Enseignant" class="custom-control-label font-weight-bold"></label>
+            <select asp-for="EnseignantID" class="form-control" asp-items="ViewBag.ProfSL">
+                <option value="">---Choisissez le prof---</option>
+            </select>
+            <span asp-validation-for="Enseignant"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Statu" class="custom-control-label font-weight-bold"></label>
+            <select asp-for="Statu" asp-items="@Html.GetEnumSelectList<Statu>()">
+                <option value="">---Choisissez le Niveau---</option>
+            </select>
+            <span asp-validation-for="Statu"></span>
+        </div>
+
+        <div class="form-group justify-content-xl-center">
+            <input type="submit" value="Ajouter" class="btn btn-primary" />
+            <a asp-controller="Option" asp-action="Index" class="nav-link text-danger">Annuler</a>
+        </div>
+    </form>
+</div>
+
+
+@section scripts{
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+}

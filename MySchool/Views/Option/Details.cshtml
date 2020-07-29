@@ -8,8 +8,15 @@
     <h1>@Html.DisplayFor(opt => item.Designation)</h1>
 }
 
-<div class="container col-6">
+<div class="container">
     <table class="table table-info">
+        <tr>
+            <th>Titre</th>
+            <th>Volume horaire</th>
+            <th>Dispenser par</th>
+            <th>Etat</th>
+            <th>Traveaux</th>
+        </tr>
         @foreach (var Opt in Model)
         {
             if (Opt.Cours.Count() > 0)
@@ -19,9 +26,16 @@
                     <tr>
                         <td> @Html.DisplayFor(cours => item.DesignationCours)</td>
                         <td> @Html.DisplayFor(cours => item.VolumeHoraire)</td>
-                        <td> @Html.DisplayFor(cours => item.Enseignant)</td>
+                        <td> @Html.DisplayFor(cours => item.Enseignant.Fullname)</td>
                         <td> @Html.DisplayFor(cours => item.Statu)</td>
-                        <td> @item.Traveaux.Count()</td>
+                        @if (!Object.ReferenceEquals(item.Traveaux, null))
+                        {
+                            <td> @item.Traveaux.Count()</td>
+                        }
+                        else
+                        {
+                            <td>aucun travail effectuer</td>
+                        }
                     </tr>
                 }
             }

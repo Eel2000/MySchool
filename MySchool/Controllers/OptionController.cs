@@ -58,7 +58,9 @@ namespace MySchool.Controllers
             //var option = _dbContext.Options.Include(o => o.Cours).ToList();
             var optLoad = _dbContext.Options
                 .Where(o => o.OptionID == id)
-                .Include(o => o.Cours).ToList();
+                .Include(o => o.Cours)
+                    .ThenInclude(o => o.Enseignant)
+                .ToList();
 
             return View(optLoad);
         }
