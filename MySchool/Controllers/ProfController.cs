@@ -67,5 +67,22 @@ namespace MySchool.Controllers
 
             return View(profDisponible);
         }
+
+        [HttpGet]
+        public IActionResult DetailDuProf(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var prof = _dbContext.Enseignants
+                .Where(p => p.EnseignantID == id)
+                .Include(p => p.Option)
+                    .ThenInclude(p => p.Cours)
+                .ToList();
+
+            return View(prof);
+        }
     }
 }

@@ -1,0 +1,108 @@
+﻿@model IEnumerable<MySchool.Models.Enseignant>
+@{
+    ViewData["Title"] = "Profile";
+}
+
+<h1>Profile de l'enseignant</h1>
+<hr />
+
+@foreach (var prof in Model)
+{
+    <div class="container col-12">
+
+        <div class="col-md-8">
+            <div class="form-group">
+                <label class="font-weight-bold">Prenom :</label>
+                <label>@Html.DisplayFor(p => prof.FirstName)</label>
+            </div>
+        </div>
+        <div class="col-md-8">
+            <div class="form-group">
+                <label class="font-weight-bold">Nom Complet :</label>
+                <label>@Html.DisplayFor(p => prof.LastName)</label>
+            </div>
+        </div>
+        <div class="col-md-8">
+            <div class="form-group">
+                <label class="font-weight-bold">Email :</label>
+                <label>@Html.DisplayFor(p => prof.Email)</label>
+            </div>
+        </div>
+        <div class="col-md-8">
+            <div class="form-group">
+                <label class="font-weight-bold">Telephone :</label>
+                <label>@Html.DisplayFor(p => prof.PhoneNumber)</label>
+            </div>
+        </div>
+        <div class="col-md-8">
+            <div class="form-group">
+                <label class="font-weight-bold">Enfants :</label>
+                @if (!Object.ReferenceEquals(prof.Cours, null))
+                {
+                    <label>@prof.Cours.Count()</label>
+                }
+                else
+                {
+                    <label>Aucun cours dispenser</label>
+                }
+            </div>
+        </div>
+    </div>
+}
+
+<div class="container">
+    <table class="table table-primary">
+        <tr>
+            <th>Desigantion</th>
+            <th>Option</th>
+            <th>Volume Horaire</th>
+            <th>Statu</th>
+            <th>Traveaux</th>
+        </tr>
+        @if (Model.Count() > 0)
+        {
+            foreach (var prof in Model)
+            {
+                if (!Object.ReferenceEquals(prof.Cours, null))
+                {
+                    foreach (var cours in prof.Cours)
+                    {
+                        <tr>
+                            <td>@Html.DisplayFor(e => cours.DesignationCours)</td>
+                            <td>@Html.DisplayFor(e => cours.Option.Designation)</td>
+                            <td>@Html.DisplayFor(e => cours.VolumeHoraire)</td>
+                            <td>@Html.DisplayFor(e => cours.Statu)</td>
+                            @if (!Object.ReferenceEquals(cours.Traveaux, null))
+                            {
+                                <td>@Html.DisplayFor(e => cours.Traveaux.Count())</td>
+                            }
+                            else
+                            {
+                                <td>Aucun Travail fait</td>
+                            }
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td>----------</td>
+                        <td>----------</td>
+                        <td>----------</td>
+                        <td>----------</td>
+                        <td>----------</td>
+                    </tr>
+                }
+            }
+
+        }
+        else
+        {
+            <tr>
+                <td>
+                    <h1 class="text-info">Aucun n'a ete assigner </h1>
+                </td>
+            </tr>
+        }
+    </table>
+</div>
