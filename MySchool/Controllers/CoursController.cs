@@ -81,5 +81,58 @@ namespace MySchool.Controllers
             PopulateProfDropDownList();
             return View();
         }
+
+        [HttpGet]
+        public async Task<IActionResult> Modifier(int? id)
+        {
+            if(id == null) { }
+
+            var coursToUpdate = await _dbContext.Cours
+                .Include(p => p.Enseignant)
+                    .ThenInclude(p => p.Option)
+                .FirstOrDefaultAsync(e => e.CoursID == id);
+
+
+            PopulateOptionsDropDownList();
+            PopulateProfDropDownList();
+
+            return View(coursToUpdate);
+        }
+
+        [HttpPost,ActionName("Edit")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> UpdateCours(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var coursToUpdate = await _dbContext.Cours
+                .FirstOrDefaultAsync(c => c.CoursID == id);
+
+            if(await TryUpdateModelAsync<Cours>(coursToUpdate,"",
+                c => c.DesignationCours, c => c.VolumeHoraire, c => c.Statu, c => c.OptionID, c => c.EnseignantID))
+            {
+                try
+                {
+                    await _dbContext.SaveChangesAsync();
+
+                    await Task.Delay(1000);
+                    return RedirectToAction("Index");
+                }
+                catch (DbUpdateException)
+                {
+
+                    ModelState.AddModelError("", "impossible d'actualiser les information sur ce cours");
+                }
+
+               
+            }
+            
+            return View("UpdateCours", coursToUpdate);
+        }
+
+        
     }
 }

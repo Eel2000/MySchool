@@ -24,14 +24,14 @@ namespace MySchool.Controllers
 
         //creating method for populating Option from db      
         public void PopulateOptionsDropDownList(object selectedOption = null)
-            {
-                var OptionsQuery = from c in _dbContext.Options
-                                   orderby c.Designation //sort by designation
-                                   select c;
+        {
+            var OptionsQuery = from c in _dbContext.Options
+                               orderby c.Designation //sort by designation
+                               select c;
 
-                ViewBag.CategoryNameSL = new SelectList(OptionsQuery.AsNoTracking(), "OptionID", "Designation", selectedOption);
+            ViewBag.CategoryNameSL = new SelectList(OptionsQuery.AsNoTracking(), "OptionID", "Designation", selectedOption);
 
-            }
+        }
         public void PopulateParentsDropDownList(object selectedOption = null)
         {
             var OptionsQuery = from c in _dbContext.Parents
@@ -67,19 +67,19 @@ namespace MySchool.Controllers
             if (ModelState.IsValid)
             {
                 var NewEnfant = enfants;
-                //if (await TryUpdateModelAsync<Enfants>(NewEnfant,"enfant",
-                //    e => e.EnfantID, e =>e.FirstName,e =>e.LastName, e =>e.Email, e =>e.Grade, e => e.OptionID))
-                //{
-                    await _dbContext.Enfants.AddAsync(NewEnfant);
-                    await _dbContext.SaveChangesAsync();
+                
+                await _dbContext.Enfants.AddAsync(NewEnfant);
+                await _dbContext.SaveChangesAsync();
 
-                     await Task.Delay(1000);
-               // }
+                await Task.Delay(1000);
+               
 
                 return RedirectToAction("Index", "Home");
             }
+
             PopulateOptionsDropDownList();
             PopulateParentsDropDownList();
+
             return View();
         }
 
@@ -119,7 +119,7 @@ namespace MySchool.Controllers
             var parentLoaded = _dbContext.Parents
                 .Where(p => p.ParentID == id)
                 .Include(p => p.Enfants)
-                    .ThenInclude(e =>e.Option)
+                    .ThenInclude(e => e.Option)
                  .ToList();
 
             return View(parentLoaded);
@@ -128,7 +128,7 @@ namespace MySchool.Controllers
         [HttpGet]
         public async Task<IActionResult> UpdateParent(int? id)
         {
-            if(id == null)
+            if (id == null)
             {
                 return NotFound();
             }
@@ -139,17 +139,20 @@ namespace MySchool.Controllers
             return View(parentToUpdate);
         }
 
-        [HttpPost]
+        [HttpPost, ActionName("UpdateParentPost")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> UpdateParent( int? id,[Bind("FirstName,LastName,Email,Phone,AdresseTuteur")] Parent parent)
+        public async Task<IActionResult> UpdateParentPost(int? id)
         {
-            if (ModelState.IsValid)
+            if (id == null)
             {
-                var parentToUpdate = await _dbContext.Parents
-                                        .FirstOrDefaultAsync(p => p.ParentID == id);
+                return NotFound();
+            }
 
-              if(await TryUpdateModelAsync<Parent>(parentToUpdate,"M.A.J",
-                  p => p.FirstName, p => p.LastName, p => p.Email, p => p.Phone, p => p.AdresseTuteur))
+            var parentToUpdate = await _dbContext.Parents
+                .FirstOrDefaultAsync(p => p.ParentID == id);
+
+                if (await TryUpdateModelAsync<Parent>(parentToUpdate, "",
+                    p => p.FirstName, p => p.LastName, p => p.Email, p => p.Phone, p => p.AdresseTuteur))
                 {
                     try
                     {
@@ -157,7 +160,7 @@ namespace MySchool.Controllers
 
 
                         await Task.Delay(1000);
-                        return RedirectToAction("Index", "Parents");
+                        return RedirectToAction("Parents", "Inscription");
                     }
                     catch (DbUpdateException)
                     {
@@ -167,9 +170,9 @@ namespace MySchool.Controllers
                     }
                 }
 
-            }
+            //}
 
-            return View();
+            return View("UpdateParent", parentToUpdate);
         }
 
     }

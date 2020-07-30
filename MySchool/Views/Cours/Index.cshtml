@@ -14,6 +14,7 @@
             <th>Enseignant</th>
             <th>Volume Horaire</th>
             <th>Statu</th>
+            <th>-------</th>
         </tr>
         @if (Object.ReferenceEquals(Model.Count(), null))
         {
@@ -24,6 +25,7 @@
                 <td>vide</td>
                 <td>vide</td>
                 <td>vide</td>
+                <td></td>
             </tr>
         }
         else
@@ -37,6 +39,10 @@
                     <td>@Html.DisplayFor(c => cours.Enseignant.Fullname)</td>                    
                     <td>@Html.DisplayFor(c => cours.VolumeHoraire)</td>                    
                     <td>@Html.DisplayFor(c => cours.Statu)</td>                    
+                    <td>
+                        <a href="#">Supprimer</a> |
+                        <a asp-action="Modifier" asp-route-id="@cours.CoursID">Modifier</a>
+                    </td>                    
                 </tr>
             }
         }
