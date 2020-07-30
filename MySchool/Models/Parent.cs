@@ -29,6 +29,11 @@ namespace MySchool.Models
         [Display(Name ="Telephone")]
         public string Phone { get; set; }
 
+        [Required]
+        [DataType(DataType.MultilineText)]
+        [Display(Name ="Adresse")]
+        public string AdresseTuteur { get; set; }
+
         public ICollection<Enfants> Enfants { get; set; }
 
         public ICollection<Derogation> Derogations { get; set; }

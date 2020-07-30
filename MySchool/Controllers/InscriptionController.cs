@@ -92,7 +92,7 @@ namespace MySchool.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> AddParent([Bind("FirstName,LastName,Email,Phone")] Parent parent)
+        public async Task<IActionResult> AddParent([Bind("FirstName,LastName,Email,Phone,AdresseTuteur")] Parent parent)
         {
             if (ModelState.IsValid)
             {
