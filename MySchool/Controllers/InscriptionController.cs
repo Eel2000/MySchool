@@ -23,7 +23,7 @@ namespace MySchool.Controllers
         }
 
         //creating method for populating Option from db      
-            public void PopulateOptionsDropDownList(object selectedOption = null)
+        public void PopulateOptionsDropDownList(object selectedOption = null)
             {
                 var OptionsQuery = from c in _dbContext.Options
                                    orderby c.Designation //sort by designation
@@ -73,7 +73,7 @@ namespace MySchool.Controllers
                     await _dbContext.Enfants.AddAsync(NewEnfant);
                     await _dbContext.SaveChangesAsync();
 
-                     await Task.Delay(2000);
+                     await Task.Delay(1000);
                // }
 
                 return RedirectToAction("Index", "Home");
@@ -101,7 +101,7 @@ namespace MySchool.Controllers
                 await _dbContext.Parents.AddAsync(newParent);
                 await _dbContext.SaveChangesAsync();
 
-                await Task.Delay(2000);
+                await Task.Delay(1000);
                 return RedirectToAction("Index", "Inscription");
             }
 
@@ -123,6 +123,53 @@ namespace MySchool.Controllers
                  .ToList();
 
             return View(parentLoaded);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> UpdateParent(int? id)
+        {
+            if(id == null)
+            {
+                return NotFound();
+            }
+
+            var parentToUpdate = await _dbContext.Parents
+                .FirstOrDefaultAsync(p => p.ParentID == id);
+
+            return View(parentToUpdate);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> UpdateParent( int? id,[Bind("FirstName,LastName,Email,Phone,AdresseTuteur")] Parent parent)
+        {
+            if (ModelState.IsValid)
+            {
+                var parentToUpdate = await _dbContext.Parents
+                                        .FirstOrDefaultAsync(p => p.ParentID == id);
+
+              if(await TryUpdateModelAsync<Parent>(parentToUpdate,"M.A.J",
+                  p => p.FirstName, p => p.LastName, p => p.Email, p => p.Phone, p => p.AdresseTuteur))
+                {
+                    try
+                    {
+                        await _dbContext.SaveChangesAsync();
+
+
+                        await Task.Delay(1000);
+                        return RedirectToAction("Index", "Parents");
+                    }
+                    catch (DbUpdateException)
+                    {
+
+                        ModelState.AddModelError("", "Impossible de mettre a jour les information entrees" +
+                            "veuillez svp reessayer.");
+                    }
+                }
+
+            }
+
+            return View();
         }
 
     }
