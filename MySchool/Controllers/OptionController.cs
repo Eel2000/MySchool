@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Common;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -63,6 +64,49 @@ namespace MySchool.Controllers
                 .ToList();
 
             return View(optLoad);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> UpdateOption(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var optionToUpdate = await _dbContext.Options.FirstOrDefaultAsync(o => o.OptionID == id);
+
+            return View(optionToUpdate);
+        }
+
+        [HttpPost, ActionName("UpdateOption")]
+        [ValidateAntiForgeryTokenAttribute]
+        public async Task<IActionResult> UpdateOptionPost(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var optionToUpdate = await _dbContext.Options.FirstOrDefaultAsync(o => o.OptionID == id);
+
+            if (await TryUpdateModelAsync<Option>(optionToUpdate,"",
+                o => o.Designation))
+            {
+                try
+                {
+                    await _dbContext.SaveChangesAsync();
+
+                    return RedirectToAction("Index");
+                }
+                catch(DbException ex)
+                {
+                    ViewBag.erro = ex.Message;
+                    return View();
+                }
+            }
+
+            return View(optionToUpdate);
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Common;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -79,10 +80,41 @@ namespace MySchool.Controllers
             var prof = _dbContext.Enseignants
                 .Where(p => p.EnseignantID == id)
                 .Include(p => p.Option)
-                    .ThenInclude(p => p.Cours)
+                .Include(p => p.Cours)
+                    .ThenInclude(c => c.Option)
                 .ToList();
 
             return View(prof);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> DeleteProf(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var profToDel = await _dbContext.Enseignants
+                .FirstOrDefaultAsync(p => p.EnseignantID == id);
+
+            try
+            {
+
+                _dbContext.Enseignants.Remove(profToDel);
+
+                await Task.Delay(1000);
+                await _dbContext.SaveChangesAsync();
+
+                return RedirectToAction("ListOfProf");
+            }
+            catch (DbException e)
+            {
+
+                ViewBag.error = e.Message;
+            }
+
+            return View();
         }
     }
 }

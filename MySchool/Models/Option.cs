@@ -14,5 +14,7 @@ namespace MySchool.Models
         public string Designation { get; set; }
 
         public IEnumerable<Cours> Cours { get; set; }
+
+        
     }
 }

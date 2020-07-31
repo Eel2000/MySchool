@@ -40,7 +40,7 @@
                     <td>@Html.DisplayFor(c => cours.VolumeHoraire)</td>                    
                     <td>@Html.DisplayFor(c => cours.Statu)</td>                    
                     <td>
-                        <a href="#">Supprimer</a> |
+                        <a asp-action="DeteleCours" asp-route-id="@cours.CoursID">Supprimer</a> |
                         <a asp-action="Modifier" asp-route-id="@cours.CoursID">Modifier</a>
                     </td>                    
                 </tr>

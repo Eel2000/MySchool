@@ -6,6 +6,8 @@
 @foreach (var item in Model)
 {
     <h1>@Html.DisplayFor(opt => item.Designation)</h1>
+    <br />
+    <a asp-action="UpdateOption" asp-route-id="@item.OptionID" class="nav-link">Modifier appelation</a>
 }
 
 <div class="container">
@@ -50,3 +52,5 @@
         }
     </table>
 </div>
+
+

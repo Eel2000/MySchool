@@ -133,6 +133,25 @@ namespace MySchool.Controllers
             return View("UpdateCours", coursToUpdate);
         }
 
+        [HttpGet]
+        public async Task<IActionResult> DeteleCours(int? id)
+        {
+            if (id == null)
+            {
+
+            }
+
+            var coursToDelete = await _dbContext.Cours.FirstOrDefaultAsync(c => c.CoursID == id);
+
+            await Task.Delay(1000);
+             _dbContext.Remove(coursToDelete);
+            await _dbContext.SaveChangesAsync();
+
+            return RedirectToAction("Index");
+
+            
+        }
+
         
     }
 }

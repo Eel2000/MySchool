@@ -5,6 +5,16 @@
 
 <h1>Profile de l'enseignant</h1>
 <hr />
+<div class="table-danger">
+    <label>@ViewBag.error</label>
+</div>
+<div class="jumbotron">
+    <p>
+        On peut pas desengager un prof si le remplacant n'y est pas encore il faut d'abord avoir 
+        son remplacant pour licensier un prof ou le supprimer de la base des donnees, cela permet 
+        a ce qu'il n'y ait aucun cours qui reste sans professeur ou enseignant.
+    </p>
+</div>
 
 @foreach (var prof in Model)
 {
@@ -36,7 +46,7 @@
         </div>
         <div class="col-md-8">
             <div class="form-group">
-                <label class="font-weight-bold">Enfants :</label>
+                <label class="font-weight-bold">Cours dispensés :</label>
                 @if (!Object.ReferenceEquals(prof.Cours, null))
                 {
                     <label>@prof.Cours.Count()</label>
@@ -48,7 +58,13 @@
             </div>
         </div>
     </div>
+    <div>
+        <a asp-action="DeleteProf" asp-route-id="@prof.EnseignantID" class="btn btn-danger text-white">Licencier</a>
+    </div>
+    <br />
 }
+
+
 
 <div class="container">
     <table class="table table-primary">
