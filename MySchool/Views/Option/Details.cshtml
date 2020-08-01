@@ -9,7 +9,9 @@
     <br />
     <a asp-action="UpdateOption" asp-route-id="@item.OptionID" class="nav-link">Modifier appelation</a>
 }
-
+<hr />
+<h3 class="alert-info">Cours</h3>
+<br />
 <div class="container">
     <table class="table table-info">
         <tr>
@@ -53,4 +55,48 @@
     </table>
 </div>
 
+<hr />
+@* liste d'eleve de l'option *@
+<h3 class="alert-info">Eleves</h3>
+<br />
+<div class="container">
+    <table class="table table-info">
+        <tr>
+            <th>Prenom</th>
+            <th>Nom Complet</th>
+            
+            <th>Traveaux</th>
+        </tr>
+        @foreach (var Opt in Model)
+        {
+            if (Opt.Enfants.Count() > 0)
+            {
+                foreach (var item in Opt.Enfants)
+                {
+                    <tr>
+                        <td> @Html.DisplayFor(cours => item.FirstName)</td>
+                        <td> @Html.DisplayFor(cours => item.LastName)</td>
+                        
+                        @if (!Object.ReferenceEquals(item.Traveaux, null))
+                        {
+                            <td> @item.Traveaux.Count()</td>
+                        }
+                        else
+                        {
+                            <td>aucun travail effectuer</td>
+                        }
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr>
+                    <td>
+                        <h4 class="text-info text-capitalize text-center">Aucun eleve n'est disponible dans cette section pour le moment!</h4>
+                    </td>
+                </tr>
+            }
+        }
+    </table>
+</div>
 

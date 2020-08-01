@@ -15,6 +15,6 @@ namespace MySchool.Models
 
         public IEnumerable<Cours> Cours { get; set; }
 
-        
+        public IEnumerable<Enfants> Enfants { get; set; }
     }
 }

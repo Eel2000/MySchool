@@ -21,7 +21,10 @@ namespace MySchool.Controllers
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            var optionAvailable = await _dbContext.Options.Include(o => o.Cours).ToListAsync();
+            var optionAvailable = await _dbContext.Options
+                .Include(o => o.Cours)
+                .Include(o => o.Enfants)
+                .ToListAsync();
             return View(optionAvailable);
         }
 
@@ -61,6 +64,7 @@ namespace MySchool.Controllers
                 .Where(o => o.OptionID == id)
                 .Include(o => o.Cours)
                     .ThenInclude(o => o.Enseignant)
+                .Include(o => o.Enfants)
                 .ToList();
 
             return View(optLoad);
@@ -74,7 +78,8 @@ namespace MySchool.Controllers
                 return NotFound();
             }
 
-            var optionToUpdate = await _dbContext.Options.FirstOrDefaultAsync(o => o.OptionID == id);
+            var optionToUpdate = await _dbContext.Options
+                .FirstOrDefaultAsync(o => o.OptionID == id);
 
             return View(optionToUpdate);
         }
