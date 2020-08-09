@@ -3,52 +3,62 @@
     ViewData["Title"] = "Options Disponible";
 }
 
-    <h1>Bienvenu dans notre etablissement</h1>
+<h1>Bienvenu dans notre etablissement</h1>
 
-    <div class="jumbotron">
-        <p class="text-black-50">
-            ici vous trouverez la liste valide des section organisees chez nous , nous esperons que cela
-            vous permettra d'avoir une idee claire de l'option ou la section que suivra votre ou vos enfants
-            ici chez nous.
-        </p>
-    </div>
+<div class="jumbotron">
+    <p class="text-black-50">
+        ici vous trouverez la liste valide des section organisees chez nous , nous esperons que cela
+        vous permettra d'avoir une idee claire de l'option ou la section que suivra votre ou vos enfants
+        ici chez nous.
+    </p>
+</div>
 
-    <div class="container">
-        <table class="table table-striped">
+<div class="container">
+    <table class="table table-striped">
+        <tr>
+            <th>#</th>
+            <th>Sections</th>
+            <th>Nombres des Cours</th>
+            @*<th>Nombres d'eleves</th>*@
+            <th>------</th>
+        </tr>
+        @if (Model.Count() > 0)
+        {
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(option => item.OptionID)</td>
+                    <td>@Html.DisplayFor(option => item.Designation)</td>
+                    <td><span class="badge-info col-sm-3">@item.Cours.Count()</span> </td>
+                    @*<td><span class="badge-info col-sm-3">@item.Enfants.Count()</span> </td>*@
+                    <td>
+                        <a asp-controller="Option" asp-action="Details" asp-route-id="@item.OptionID" class="card-link">Voir</a>
+                    </td>
+                </tr>
+            }
+        }
+        else
+        {
             <tr>
-                <th>#</th>
-                <th>Sections</th>
-                <th>Nombres des Cours</th>
-                <th>Nombres d'eleves</th>
-                <th>------</th>
+                <td>
+                    <p>Pas d'options...</p>
+                </td>
             </tr>
-           @if (Model.Count() > 0)
-           {
-               @foreach (var item in Model)
-               {
-                   <tr>
-                       <td>@Html.DisplayFor(option => item.OptionID)</td>
-                       <td>@Html.DisplayFor(option => item.Designation)</td>
-                       <td><span class="badge-info col-sm-3">@item.Cours.Count()</span> </td>
-                       <td><span class="badge-info col-sm-3">@item.Enfants.Count()</span> </td>
-                       <td>
-                           <a asp-controller="Option" asp-action="Details" asp-route-id="@item.OptionID" class="card-link">Voir</a>
-                       </td>
-                   </tr>
-               }
-           }
-           else
-           {
-               <tr>
-                   <td>
-                       <p>Pas d'options...</p>
-                   </td>
-               </tr>
-           
-           }
-        </table>
+
+        }
+    </table>
+</div>
+<div>
+    <a asp-action="AddOption" asp-controller="Option" class="nav-link">Nouvelle Option</a>
+</div>
+
+
+<div class="row">
+    <div class="col">
+        <div class="collapse multi-collapse" id="Grade">
+            <div class="card card-body">
+                Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.
+            </div>
+        </div>
     </div>
-    <div>
-        <a asp-action="AddOption" asp-controller="Option" class="nav-link">Nouvelle Option</a>
-    </div>
-    
+</div>

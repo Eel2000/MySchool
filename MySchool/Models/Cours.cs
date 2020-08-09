@@ -34,7 +34,11 @@ namespace MySchool.Models
         [Required]
         public Statu? Statu { get; set; }
 
-        public IEnumerable<Travail> Traveaux { get; set; } 
+        public IEnumerable<Travail> Traveaux { get; set; }
+
+        [Required]
+        public Grade? Grade { get; set; }
+
 
         /// <summary>
         /// navigation properties

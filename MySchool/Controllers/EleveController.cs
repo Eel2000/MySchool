@@ -16,8 +16,10 @@ namespace MySchool.Controllers
             _dbContext = dbContext;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
+           // var ToDetails = await _dbContext
+
             return View();
         }
     }
