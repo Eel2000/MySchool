@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using MySchool.Data;
+using MySchool.Models;
 
 namespace MySchool.Controllers
 {
@@ -18,9 +20,37 @@ namespace MySchool.Controllers
 
         public async Task<IActionResult> Index()
         {
-           // var ToDetails = await _dbContext
+            var ListElves = await _dbContext.Enfants
+                .Include(e => e.Option)
+                    .OrderBy(e => e.Grade)
+                        .ThenByDescending(e => e.Grade)
+                .OrderBy(e => e.LastName)
+                    .ThenByDescending(e => e.LastName)
+                .ToListAsync();
 
-            return View();
+            return View(ListElves);
+        }
+
+        [HttpGet,ActionName("Search")]
+        public IActionResult Search( string key)
+        {
+            ViewData["Keyword"] = key;
+
+
+            var etud = from e in _dbContext.Enfants
+                       select e;
+
+            if (!String.IsNullOrWhiteSpace(key))
+            {
+                etud = etud.Where(e => e.LastName.Contains(key)
+                        || e.FirstName.Contains(key));
+
+                
+                return RedirectToAction("Index",etud);
+            }
+
+           
+            return RedirectToAction("Index");
         }
     }
 }

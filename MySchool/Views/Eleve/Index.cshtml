@@ -1,5 +1,44 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model IEnumerable<Enfants>
 @{
+    ViewData["Title"] = "list d'eleve";
 }
+
+<h1 class="text-center text-black-50">Liste d'eleve selon les promotion</h1>
+
+<form method="get" class="form-inline" asp-action="Search">
+    <div class="form-group mx-sm-3 mb-2">
+        <label for="Search" class="sr-only">Rechercher un eleve</label>
+        <input type="search" class="form-control" name="key" id="Search" value="@ViewData["Keyword"]" placeholder="Recherche">
+    </div>
+    <input type="submit" value="Chercher" class="btn btn-outline-success mb-2"/>
+</form>
+
+<div class="d-inline container">
+    <Label>@ViewData["msg"]</Label>
+</div>
+
+<div class="container">
+    <table class="table table-striped">
+        <tr>
+            <th>#</th>
+            <th>Prenom</th>
+            <th>Nom complet</th>
+            <th>Promotion</th>
+            <th>classe</th>
+            <th>-------</th>
+        </tr>
+        @foreach (var eleve in Model)
+        {
+            <tr>
+                <td></td>
+                <td>@Html.DisplayFor(e => eleve.FirstName)</td>
+                <td>@Html.DisplayFor(e => eleve.LastName)</td>
+                <td>@Html.DisplayFor(e => eleve.Option.Designation)</td>
+                <td>@Html.DisplayFor(e => eleve.Grade)</td>
+                <td>
+                    <a href="#">Details</a>
+                </td>
+            </tr>
+        }
+    </table>
+</div>
