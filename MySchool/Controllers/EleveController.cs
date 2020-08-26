@@ -32,7 +32,7 @@ namespace MySchool.Controllers
         }
 
         [HttpGet,ActionName("Search")]
-        public IActionResult Search( string key)
+        public async Task<IActionResult> Search( string key)
         {
             ViewData["Keyword"] = key;
 
@@ -46,11 +46,12 @@ namespace MySchool.Controllers
                         || e.FirstName.Contains(key));
 
                 
-                return RedirectToAction("Index",etud);
+                return RedirectToAction("Index",await etud.AsNoTracking().ToListAsync());
             }
 
+            var msg = "N'existe pas!";
            
-            return RedirectToAction("Index");
+            return RedirectToAction("Index",ViewData[$"{msg}"]);
         }
     }
 }
