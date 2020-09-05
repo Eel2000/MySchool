@@ -31,7 +31,7 @@ namespace MySchool.Controllers
             return View(ListElves);
         }
 
-        [HttpGet,ActionName("Search")]
+        [HttpPost,ActionName("Search")]
         public async Task<IActionResult> Search( string key)
         {
             ViewData["Keyword"] = key;
